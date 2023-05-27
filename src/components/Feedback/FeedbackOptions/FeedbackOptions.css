@@ -1,0 +1,13 @@
+.rate__block {
+    display: flex;
+    margin-left: 13px;
+    gap: 30px;
+}
+.rate__button {
+    width: 90px;
+    height: 45px;
+    border-radius: 4px;
+    &:first-child {
+        margin-left: 20px;
+    }
+}

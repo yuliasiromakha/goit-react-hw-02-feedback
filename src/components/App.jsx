@@ -1,16 +1,24 @@
+import React from 'react';
+import FeedbackTitle from './Feedback/FeedbackTitle/FeedbackTitle';
+import FeedbackStatistics from './Feedback/FeedbackStatistics';
+
 export const App = () => {
   return (
+
     <div
       style={{
         height: '100vh',
-        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
+        color: '#010101',
+        fontSize: 26,
       }}
     >
-      React homework template
+
+    <FeedbackTitle title='Please leave feedback'style={{marginLeft: 30}}/>
+
+    <FeedbackStatistics/>
+    
     </div>
   );
 };
