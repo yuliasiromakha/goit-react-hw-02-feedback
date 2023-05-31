@@ -11,16 +11,8 @@ class FeedbackStatistics extends React.Component {
     bad: 0
   };
 
-  addGoodReview = () => {
-    this.setState((prevState) => ({ good: prevState.good + 1 }));
-  };
-
-  addNeutralReview = () => {
-    this.setState((prevState) => ({ neutral: prevState.neutral + 1 }));
-  };
-
-  addBadReview = () => {
-    this.setState((prevState) => ({ bad: prevState.bad + 1 }));
+  addReview = (name) => {
+    this.setState((prevState) => ({ [name]: prevState[name] + 1 }));
   };
 
   countTotalFeedback = () => {
@@ -48,7 +40,7 @@ class FeedbackStatistics extends React.Component {
   
     return (
       <>
-      <FeedbackOptions addGoodReview={this.addGoodReview} addNeutralReview={this.addNeutralReview} addBadReview={this.addBadReview} />
+      <FeedbackOptions addReview={this.addReview} options={Object.keys(this.state)}/>
       
       <FeedbackTitle title='Statistics' style={{
       fontSize: 25,
