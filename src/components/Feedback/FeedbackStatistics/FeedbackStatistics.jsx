@@ -5,28 +5,39 @@ import FeedbackTitle from "../FeedbackTitle/FeedbackTitle";
 import Notification from "../Notification/Notification";
 
 const FeedbackStatistics = () => {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0
-  });
+
+  const [goodFeedback, setGoodFeedback] = useState(0)
+  const [neutralFeedback, setNeutralFeedback] = useState(0)
+  const [badFeedback, setBadFeedback] = useState(0)
+
 
   const addReview = (name) => {
-    setFeedback((prevFeedback) => ({
-      ...prevFeedback,
-      [name]: prevFeedback[name] + 1
-    }));
+    switch (name) {
+      case 'good':
+        setGoodFeedback((prevCount) => prevCount + 1)
+        break;
+    
+      case 'neutral':
+        setNeutralFeedback((prevCount) => prevCount + 1)
+        break;
+
+      case 'bad':
+        setBadFeedback((prevCount) => prevCount + 1)
+        break;
+      
+      default:
+        break;
+    }
   };
 
   const countTotalFeedback = () => {
-    const { good, neutral, bad } = feedback;
-    return good + neutral + bad;
+    return goodFeedback + neutralFeedback + badFeedback;
   };
 
   const countPositiveFeedbackPercentage = () => {
-    const { good } = feedback;
+
     const totalFeedback = countTotalFeedback();
-    const percentage = Math.round((good / totalFeedback) * 100);
+    const percentage = Math.round((goodFeedback / totalFeedback) * 100);
 
     if (totalFeedback === 0) {
       return 0;
@@ -35,13 +46,12 @@ const FeedbackStatistics = () => {
     return percentage;
   };
 
-  const { good, neutral, bad } = feedback;
   const totalFeedback = countTotalFeedback();
   const positiveFeedback = countPositiveFeedbackPercentage();
 
   return (
     <>
-      <FeedbackOptions addReview={addReview} options={Object.keys(feedback)} />
+      <FeedbackOptions addReview={addReview} options={["good", "neutral", "bad"]} />
 
       <FeedbackTitle
         title="Statistics"
@@ -52,18 +62,16 @@ const FeedbackStatistics = () => {
         }}
       />
 
-      {totalFeedback === 0 ? (
-        <Notification message="There is no feedback" styles={{ marginLeft: 30 }} />
-      ) : (
-        <Statistics
-          styles={{ listStyle: "none" }}
-          goodRate={good}
-          neutralRate={neutral}
-          badRate={bad}
-          total={totalFeedback}
-          positiveFeedback={positiveFeedback}
-        />
-      )}
+      {totalFeedback === 0 && <Notification message="There is no feedback" styles={{ marginLeft: 30 }} />}
+      {totalFeedback > 1 && 
+              <Statistics
+              styles={{ listStyle: "none" }}
+              goodRate={goodFeedback}
+              neutralRate={neutralFeedback}
+              badRate={badFeedback}
+              total={totalFeedback}
+              positiveFeedback={positiveFeedback}
+            />}
     </>
   );
 };
